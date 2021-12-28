@@ -1,0 +1,17 @@
+{
+  "name": "bot-sam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.5.0"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "^1.15.3"
+  }
+}
