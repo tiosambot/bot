@@ -4,14 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiosambot/bot.git"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.5.0"
+  "bugs": {
+    "url": "https://github.com/tiosambot/bot/issues"
   },
+  "homepage": "https://github.com/tiosambot/bot#readme",
   "dependencies": {
-    "whatsapp-web.js": "^1.15.3"
+    "axios": "^0.24.0",
+    "fs": "^0.0.1-security",
+    "image-search-google": "^1.3.0",
+    "puppeteer": "^13.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.15.3",
+    "ytdl-core": "^4.9.2"
   }
 }
