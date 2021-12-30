@@ -206,8 +206,14 @@ client.on('message', async msg => {
                     console.log(`stdout: ${stdout}`);
                 });
             }).then(async () => {
-                let media = MessageMedia.fromFilePath('./audio.mp3');
-                await msg.reply(media);
+
+                try{
+                    let media = MessageMedia.fromFilePath('./audio.mp3');
+                    await msg.reply(media);
+                }catch{
+                    
+                }
+
             })
 
     }
