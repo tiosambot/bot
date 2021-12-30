@@ -161,7 +161,7 @@ client.on('message', async msg => {
             let serialized = [];
 
             participants.forEach(element => {
-                if(element.id._serialized != Client.info.wid){
+                if(element.id._serialized != client.info.wid){
                     serialized.push(element.id._serialized);
                 }
             })
@@ -211,7 +211,7 @@ client.on('message', async msg => {
                     let media = MessageMedia.fromFilePath('./audio.mp3');
                     await msg.reply(media);
                 }catch{
-                    
+
                 }
 
             })
@@ -256,7 +256,7 @@ client.on('message', async msg => {
             let serialized = [];
 
             participants.forEach(async element => {
-                await Client.getContactById(element.id._serialized);
+                await client.getContactById(element.id._serialized);
             })
 
             msg.reply('⠀', null, {
@@ -273,8 +273,11 @@ client.on('message', async msg => {
         client.search(substring, options)
             .then(async images => {
                 let imageurl = images[0].thumbnail;
-
+                
+                try{
                 let media = await MessageMedia.fromUrl(imageurl);
+                }catch{}
+                
                 msg.reply(media);
             })
             .catch(error => console.log(error));
