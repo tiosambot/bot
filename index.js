@@ -24,7 +24,7 @@ client.on('ready', async () => {
 
 client.on('message', async msg => {
     let isVip = false;
-    let isOwner = true;
+    let isOwner = false;
 
     let contact = await msg.getContact();
     let rawdata = fs.readFileSync('banned.json');
@@ -74,7 +74,7 @@ client.on('message', async msg => {
 
     }
 
-    if(msg.body.startsWith('.ban ') && isVip || isOwner){
+    if(msg.body.startsWith('.ban ') && isVip || msg.body == '.ban' && isOwner){
         let contacts = await msg.getMentions();
         let chat = await msg.getChat();
 
@@ -86,7 +86,7 @@ client.on('message', async msg => {
 
     }
 
-    if(msg.body.startsWith('.add ') && isVip || isOwner){
+    if(msg.body.startsWith('.add ') && isVip || msg.body == '.add' && isOwner){
 
         let number = msg.body.split(' ');     
         number.shift();
@@ -116,13 +116,13 @@ client.on('message', async msg => {
         fs.writeFileSync('banned.json', data);
     }
 
-    if(msg.body == '.opengp' && isVip || isOwner){
+    if(msg.body == '.opengp' && isVip || msg.body == '.opengp' && isOwner){
         let chat = await msg.getChat();
         if(chat.isGroup) await chat.setMessagesAdminsOnly(false);
     }
 
     
-    if(msg.body == '.closegp' && isVip || isOwner){
+    if(msg.body == '.closegp' && isVip || msg.body == '.closegp' && isOwner){
         let chat = await msg.getChat();
         if(chat.isGroup) await chat.setMessagesAdminsOnly(true);
     }
@@ -248,7 +248,7 @@ client.on('message', async msg => {
         
     }
 
-    if(msg.body == '.hidetag' && isVip || isOwner) {
+    if(msg.body == '.hidetag' && isVip || msg.body == '.hidetag' && isOwner) {
         let chat = await msg.getChat();
 
         if(chat.isGroup){
