@@ -8,9 +8,29 @@ const imageSearch = require('image-search-google');
 
 
 const { Client, MessageMedia } = require('whatsapp-web.js');
-const { runInContext } = require('vm');
 
-const client = new Client();
+const SESSION_FILE_PATH = './session.json';
+
+let sessionData;
+if(fs.existsSync(SESSION_FILE_PATH)) {
+    sessionData = require(SESSION_FILE_PATH);
+}
+
+const client = new Client({
+    session: sessionData
+});
+
+client.on('authenticated', (session) => {
+    sessionData = session;
+    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), (err) => {
+        if (err) {
+            console.error(err);
+        }
+        else{
+            console.log('Client is ready!')
+        }
+    });
+});
 
 client.on('qr', (qr) => {
     // Generate and scan this code with your phone
