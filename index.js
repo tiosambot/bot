@@ -9,11 +9,6 @@ const imageSearch = require('image-search-google');
 
 const { Client, MessageMedia } = require('whatsapp-web.js');
 
-const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox','--disable-setuid-sandbox']
-  })
-
 const SESSION_FILE_PATH = './session.json';
 
 let sessionData;
@@ -22,7 +17,10 @@ if(fs.existsSync(SESSION_FILE_PATH)) {
 }
 
 const client = new Client({
-    session: sessionData
+    session: sessionData,
+    puppeteer: {
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+    }
 });
 
 client.on('authenticated', (session) => {
