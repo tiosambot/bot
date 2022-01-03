@@ -3,7 +3,7 @@ const qrcode = require('qrcode-terminal');
 const axios = require('axios');
 const ytdl = require('ytdl-core');
 const { execSync } = require("child_process");
-const wikiSearch = require('./scraper');
+//const wikiSearch = require('./scraper');
 const imageSearch = require('image-search-google');
 
 
@@ -218,11 +218,11 @@ client.on('message', async msg => {
 
     }
 
-    if(msg.body.startsWith('.wikipedia ')){
+    /*if(msg.body.startsWith('.wikipedia ')){
         let substring = msg.body.substring(11)
 
         await msg.reply(await wikiSearch(`${substring}`));
-    }
+    }*/
 
     if(msg.body.startsWith('.addvip ') && isOwner){
         let mentions = await msg.getMentions();
