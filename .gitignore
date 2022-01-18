@@ -1,5 +1,5 @@
 .gitignore
 node_modules/
 session.json
-video.mp3
-audio.mp3
+*.mp4
+*.mp3
