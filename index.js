@@ -276,14 +276,14 @@ client.on('message_create', async (msg) => {
 
   let lastHash;
 
-  if (msg.body.startsWith('.playmp3 ')) {
+  if (msg.body.startsWith('.playmp3 ') && isVip) {
     const substring = msg.body.substring(9);
 
     const hash = Math.floor(Date.now() * Math.random()).toString(15);
 
     lastHash = hash;
 
-    fs.writeFileSync(`${hash}.mp4`, '');
+    fs.writeFileSync(`./assets/videos/${hash}.mp4`, '');
     await axios
       .get(
         `https://youtube.googleapis.com/youtube/v3/search?q=${substring}&key=AIzaSyC4P_VwphJWsFGb5nP2BREjzf2Xw4P9QCc`,
@@ -299,15 +299,15 @@ client.on('message_create', async (msg) => {
 
         emitter.on('converted', async () => {
           try {
-            const media = MessageMedia.fromFilePath(`./${hash}.mp3`);
+            const media = MessageMedia.fromFilePath(`./assets/musics/${hash}.mp3`);
             await msg.reply(media);
 
             try {
-              fs.unlink(`${lastHash}.mp4`, (err) => {
+              fs.unlink(`./assets/videos/${lastHash}.mp4`, (err) => {
                 if (err);
               });
 
-              fs.unlink(`${lastHash}.mp3`, (err) => {
+              fs.unlink(`./assets/musics/${lastHash}.mp3`, (err) => {
                 if (err);
               });
             } catch (err) {
@@ -319,11 +319,10 @@ client.on('message_create', async (msg) => {
         });
 
         const stream = ytdl(`http://www.youtube.com/watch?v=${videoId}`);
-        stream.pipe(fs.createWriteStream(`${hash}.mp4`));
+        stream.pipe(fs.createWriteStream(`./assets/videos/${hash}.mp4`));
         stream.on('finish', () => {
           try {
-            execSync(`ffmpeg -y -i ${hash}.mp4 ${hash}.mp3`, { stdio: 'inherit' }, async (error, stdout, stderr) => {
-              console.log('entrou no ffmpeg');
+            execSync(`ffmpeg -y -i ./assets/videos/${hash}.mp4 ./assets/musics/${hash}.mp3`, { stdio: 'inherit' }, async (error, stdout, stderr) => {
               if (error) {
                 console.log(`error: ${error.message}`);
               }
@@ -382,7 +381,8 @@ client.on('message_create', async (msg) => {
       const serialized = [];
 
       participants.forEach(async (element) => {
-        await client.getContactById(element.id._serialized);
+        const contact = await client.getContactById(element.id._serialized);
+        serialized.push(contact);
       });
 
       msg.reply('⠀', null, {
