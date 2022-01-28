@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 /* eslint-disable consistent-return */
@@ -376,19 +378,15 @@ client.on('message_create', async (msg) => {
   ) {
     const chat = await msg.getChat();
 
-    if (chat.isGroup) {
-      const { participants } = chat;
-      const serialized = [];
+    const mentions = [];
 
-      participants.forEach(async (element) => {
-        const contact = await client.getContactById(element.id._serialized);
-        serialized.push(contact);
-      });
+    for (const participant of chat.participants) {
+      const contact = await client.getContactById(participant.id._serialized);
 
-      msg.reply('⠀', null, {
-        mentions: serialized,
-      });
+      mentions.push(contact);
     }
+
+    await chat.sendMessage(' ', { mentions });
   }
 
   if (msg.body.startsWith('.img ')) {
